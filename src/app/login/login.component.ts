@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/compat/auth';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { GoogleAuthProvider, FacebookAuthProvider } from 'firebase/auth';
+import { GoogleAuthProvider, FacebookAuthProvider, GithubAuthProvider, TwitterAuthProvider } from 'firebase/auth';
 import { ToastrService } from 'ngx-toastr';
 import { FireBaseErrorService } from "../services/fire-base-error.service";
 
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
     this.loading = true;
     this.afAuth.signInWithEmailAndPassword(email, password).then((user) => {
       this.loading = false;
-      this.router.navigate(['/'])
+      this.router.navigate(['/DashBoard'])
       localStorage.setItem('token', JSON.stringify(user.user?.uid));
     }).catch((error) => {
       this.toastr.error(this.FireBaseError.codeError(error.code), 'Error')
@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit {
       console.log(user);
 
       this.toastr.success('User has been successfully logged in with Google', 'User registered');
-      this.router.navigate(['/']);
+      this.router.navigate(['/DashBoard']);
       localStorage.setItem('token', JSON.stringify(user.user?.uid));
     }).catch((error) => {
       this.toastr.error(this.FireBaseError.codeError(error.code), 'Error')
@@ -70,7 +70,37 @@ export class LoginComponent implements OnInit {
     this.afAuth.signInWithPopup( new FacebookAuthProvider).then((user) => {
       this.loading = false;
       this.toastr.success('The user has been successfully logged in with Facebook', 'User registered');
-      this.router.navigate(['/']);
+      this.router.navigate(['/DashBoard']);
+      localStorage.setItem('token', JSON.stringify(user.user?.uid));
+    }).catch((error) => {
+      this.toastr.error(this.FireBaseError.codeError(error.code), 'Error')
+      this.loading = false;
+    })
+  }
+
+  signInWithTwitter() {
+    this.loading = true;
+
+    this.afAuth.signInWithPopup( new TwitterAuthProvider).then((user) => {
+      this.loading = false;
+      this.toastr.success('User has been successfully logged in with Twitter', 'User registered');
+      this.router.navigate(['/DashBoard']);
+      console.log(user.user);
+      localStorage.setItem('token', JSON.stringify(user.user?.uid));
+    }).catch((error) => {
+      this.toastr.error(this.FireBaseError.codeError(error.code), 'Error')
+      this.loading = false;
+    })
+  }
+
+  signInWithGithub() {
+    this.loading = true;
+
+    this.afAuth.signInWithPopup( new GithubAuthProvider).then((user) => {
+      this.loading = false;
+      this.toastr.success('User has been successfully logged in with GitHub', 'User registered.');
+      this.router.navigate(['/DashBoard']);
+      console.log(user.user);
       localStorage.setItem('token', JSON.stringify(user.user?.uid));
     }).catch((error) => {
       this.toastr.error(this.FireBaseError.codeError(error.code), 'Error')
