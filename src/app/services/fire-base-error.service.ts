@@ -31,6 +31,7 @@ export class FireBaseErrorService {
       case FirebaseCodeErrorEnum.AccountExistsWithDifferentCredential:
         return 'There is already an account with the same email, but on a different credential'
 
+      
       default:
         return 'Unknown error';
     }

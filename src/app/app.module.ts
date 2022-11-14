@@ -13,13 +13,17 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ToastrModule } from 'ngx-toastr';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DashComponent } from './dash/dash.component';
+import { RegistrarMasUsuariosComponent } from './registrar-mas-usuarios/registrar-mas-usuarios.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     RegistrarUsuarioComponent,
-    RecordarPasswordComponent
+    RecordarPasswordComponent,
+    DashComponent,
+    RegistrarMasUsuariosComponent
   ],
   imports: [
     BrowserModule,
